@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 class ProductRow extends Component {
   render() {
     return (
-      <div >
-       Product's name & Price
-      </div>
+      <tr >
+        <td>{this.props.product.name}</td>
+        <td>{this.props.product.price}</td>
+      </tr>
     );
   }
 }
@@ -14,22 +15,48 @@ class ProductRow extends Component {
 class ProductCatetoryRow extends Component {
   render() {
     return (
-      <div >
-       Product's category(no duplicate)
-      </div>
+      <tr>
+        <th colSpan='2'>{this.props.category}</th>
+      </tr>
     );
   }
 }
 
+
 class ProductTable extends Component {
   render() {
+    let lastCategory = null
+    let productInfo = []    
+
+    this.props.products.map((product) => {          
+      if (product.category !== lastCategory) {
+        productInfo.push(
+        <ProductCatetoryRow 
+          category={product.category}
+          key={product.category}/>
+        )
+      }
+
+      productInfo.push( 
+        <ProductRow 
+          product={product}
+          key={product.name}/>
+      )
+      lastCategory = product.category
+      return productInfo
+    })
+
     return (
-      <div >
-        <p>Name Price</p>
-        <ProductCatetoryRow />
-        <ProductRow />
-      </div>
-    );
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>{productInfo}</tbody>
+      </table>
+    )
   }
 }
 
@@ -39,7 +66,9 @@ class SearchBar extends Component {
       <div >
         <form >
           <p><input placeholder='Search...' name='search-bar' /></p>
-          <input type='checkbox'/>Only show products in stock
+          <input type='checkbox'/>
+          {` `}
+          Only show products in stock
         </form>
       </div>
     );
