@@ -62,13 +62,23 @@ class ProductTable extends Component {
 
 class SearchBar extends Component {
   render() {
+    const filterText = this.props.filterText
+    const inStockOnly = this.props.inStockOnly
+
     return (
       <div >
         <form >
-          <p><input placeholder='Search...' name='search-bar' /></p>
-          <input type='checkbox'/>
-          {` `}
-          Only show products in stock
+          <p>
+            <input
+              type='text' 
+              placeholder='Search...'
+              value={filterText}
+            />
+          </p>
+          <input 
+            type='checkbox'
+            checked={inStockOnly}
+          />{` `}Only show products in stock
         </form>
       </div>
     );
@@ -76,11 +86,22 @@ class SearchBar extends Component {
 }
 
 class FilterableProductTable extends Component {
+  state = {
+    filterText: '',
+    inStockOnly: false
+  }
   render() {
     return (
       <div >
-        <SearchBar />
-        <ProductTable products={PRODUCTS}/>
+        <SearchBar 
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly}
+        />
+        <ProductTable 
+          products={PRODUCTS}
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly}
+        />
       </div>
     );
   }
