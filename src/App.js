@@ -87,23 +87,21 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div >
-        <form >
-          <p>
-            <input
-              type='text' 
-              placeholder='Search...'
-              value={this.props.filterText}
-              onChange={this.handleFilterTextChange}
-            />
-          </p>
-          <input 
-            type='checkbox'
-            checked={this.props.inStockOnly}
-            onChange={this.handleInStockChange}
-          />{` `}Only show products in stock
-        </form>
-      </div>
+      <form >
+        <p>
+          <input
+            type='text' 
+            placeholder='Search...'
+            value={this.props.filterText}
+            onChange={this.handleFilterTextChange}
+          />
+        </p>
+        <input 
+          type='checkbox'
+          checked={this.props.inStockOnly}
+          onChange={this.handleInStockChange}
+        />{` `}Only show products in stock
+      </form>
     );
   }
 }
@@ -133,15 +131,15 @@ class FilterableProductTable extends Component {
           filterText={this.state.filterText}
           inStockOnly={this.state.inStockOnly}
           onFilterTextChange={this.handleFilterTextChange} 
-          onInStockChange={this.handleFilterTextChange}
+          onInStockChange={this.handleInStockChange}
         />
         <ProductTable 
           products={PRODUCTS}
-          inStockOnly={this.state.inStockOnly}
-          filterText={this.state.filterText} 
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly} 
         />
       </div>
-    );
+    )
   }
 }
 
