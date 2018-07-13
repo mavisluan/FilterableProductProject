@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class ProductRow extends Component {
   render() {
     const { product } = this.props
@@ -11,7 +10,7 @@ class ProductRow extends Component {
       </span>
 
     return (
-      <tr >
+      <tr>
         <td>{name}</td>
         <td>{product.price}</td>
       </tr>
@@ -30,7 +29,6 @@ class ProductCatetoryRow extends Component {
   }
 }
 
-
 class ProductTable extends Component {
   render() {
     const filterText = this.props.filterText
@@ -46,6 +44,7 @@ class ProductTable extends Component {
       if (inStockOnly && !product.stocked) {
         return
       }
+      // remove the duplicate categories. 
       if (product.category !== lastCategory) {
         productInfo.push(
         <ProductCatetoryRow 
@@ -53,7 +52,7 @@ class ProductTable extends Component {
           key={product.category}/>
         )
       }
-
+      // display all the products' names and prices
       productInfo.push( 
         <ProductRow 
           product={product}
@@ -76,11 +75,16 @@ class ProductTable extends Component {
   }
 }
 
-class SearchBar extends Component {  
+class SearchBar extends Component {
+  // event.target returns the element that triggered the event
+  // e.target.value is the value entered in the input
+  // call function 'handleFilterTextChange' through props to update the state(filterText) 
   handleFilterTextChange = (e) => {
     this.props.onFilterTextChange(e.target.value);
   }
   
+  // e.target.checked is true when the checkbox is checked.
+  // call function 'onInStockChange' through props to update the state(inStockOnly).
   handleInStockChange = (e) => {
     this.props.onInStockChange(e.target.checked);
   }
@@ -114,11 +118,15 @@ class FilterableProductTable extends Component {
   
   handleFilterTextChange = (filterText) => {
     this.setState({
+      //when SearchBar input changed, it call handleFilterTextChange( event.target.value ) through props.
+      // state.filterText will be updated to event.target.value
       filterText: filterText
     })
   }
 
   handleInStockChange = (inStockOnly) => {
+    //when checkbox changes, it call handleInStockChange( event.target.checked ) through props.
+    // state.inStockly will be updated to event.target.checked (true when it's checked)
     this.setState({
       inStockOnly: inStockOnly
     })
