@@ -31,13 +31,11 @@ class ProductCatetoryRow extends Component {
 
 class ProductTable extends Component {
   render() {
-    const filterText = this.props.filterText
-    const inStockOnly = this.props.inStockOnly
-
+    const {filterText, inStockOnly, products} = this.props 
     let lastCategory = null
     let productInfo = []    
 
-    this.props.products.forEach((product) => {
+    products.forEach((product) => {
       if (product.name.indexOf(filterText) === -1) {
         return
       }
