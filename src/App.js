@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import escaptRegExp from 'escape-string-regexp'
 
 class ProductRow extends Component {
   render() {
@@ -36,7 +37,8 @@ class ProductTable extends Component {
     let productInfo = []    
 
     products.forEach((product) => {
-      if (product.name.indexOf(filterText) === -1) {
+      const match = new RegExp(escaptRegExp(filterText), 'i')
+      if (!match.test(product.name)) {
         return
       }
       if (inStockOnly && !product.stocked) {
