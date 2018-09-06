@@ -1,114 +1,7 @@
 import React, { Component } from 'react';
-import escaptRegExp from 'escape-string-regexp'
-
-class ProductRow extends Component {
-  render() {
-    const { product } = this.props
-    const name = product.stocked ?
-      product.name :
-      <span style={{color: 'red'}}>
-        {product.name}
-      </span>
-
-    return (
-      <tr>
-        <td>{name}</td>
-        <td>{product.price}</td>
-      </tr>
-    );
-  }
-}
-
-class ProductCatetoryRow extends Component {
-  render() {
-    const {category} = this.props
-    return (
-      <tr>
-        <th colSpan='2'>{category}</th>
-      </tr>
-    )
-  }
-}
-
-class ProductTable extends Component {
-  render() {
-    const {filterText, inStockOnly, products} = this.props 
-    let lastCategory = null
-    let productInfo = []    
-
-    products.forEach((product) => {
-      const match = new RegExp(escaptRegExp(filterText), 'i')
-      if (!match.test(product.name)) {
-        return
-      }
-      if (inStockOnly && !product.stocked) {
-        return
-      }
-      // remove the duplicate categories. 
-      if (product.category !== lastCategory) {
-        productInfo.push(
-        <ProductCatetoryRow 
-          category={product.category}
-          key={product.category}/>
-        )
-      }
-      // display all the products' names and prices
-      productInfo.push( 
-        <ProductRow 
-          product={product}
-          key={product.name}/>
-      )
-      lastCategory = product.category
-    })
-
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>{productInfo}</tbody>
-      </table>
-    )
-  }
-}
-
-class SearchBar extends Component {
-  // event.target returns the element that triggered the event
-  // e.target.value is the value entered in the input
-  // call function 'handleFilterTextChange' through props to update the state(filterText) 
-  handleFilterTextChange = (e) => {
-    this.props.onFilterTextChange(e.target.value);
-  }
-  
-  // e.target.checked is true when the checkbox is checked.
-  // call function 'onInStockChange' through props to update the state(inStockOnly).
-  handleInStockChange = (e) => {
-    this.props.onInStockChange(e.target.checked);
-  }
-
-  render() {
-    return (
-      <form >
-        <p>
-          <input
-            type='text' 
-            placeholder='Search...'
-            value={this.props.filterText}
-            onChange={this.handleFilterTextChange}
-          />
-        </p>
-        <input 
-          type='checkbox'
-          checked={this.props.inStockOnly}
-          onChange={this.handleInStockChange}
-        />{` `}Only show products in stock
-      </form>
-    );
-  }
-}
+import ProductTable from './ProductTable'
+import SearchBar from './SearchBar'
+import './App.css'
 
 class FilterableProductTable extends Component {
   state = {
@@ -116,35 +9,25 @@ class FilterableProductTable extends Component {
       inStockOnly: false   
   }
   
-  handleFilterTextChange = (filterText) => {
-    this.setState({
-      //when SearchBar input changed, it call handleFilterTextChange( event.target.value ) through props.
-      // state.filterText will be updated to event.target.value
-      filterText: filterText
-    })
-  }
+  handleFilterTextChange = (filterText) => this.setState({ filterText })
 
-  handleInStockChange = (inStockOnly) => {
-    //when checkbox changes, it call handleInStockChange( event.target.checked ) through props.
-    // state.inStockly will be updated to event.target.checked (true when it's checked)
-    this.setState({
-      inStockOnly: inStockOnly
-    })
-  }
+  handleInStockChange = (inStockOnly) => this.setState({ inStockOnly })
 
   render() {
+    const { filterText, inStockOnly } = this.state
+
     return (
-      <div >
+      <div className='app'>
         <SearchBar          
-          filterText={this.state.filterText}
-          inStockOnly={this.state.inStockOnly}
+          filterText={ filterText }
+          inStockOnly={ inStockOnly }
           onFilterTextChange={this.handleFilterTextChange} 
           onInStockChange={this.handleInStockChange}
         />
         <ProductTable 
           products={PRODUCTS}
-          filterText={this.state.filterText}
-          inStockOnly={this.state.inStockOnly} 
+          filterText={ filterText }
+          inStockOnly={ inStockOnly }
         />
       </div>
     )
@@ -159,7 +42,6 @@ const PRODUCTS = [
   { category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5' },
   { category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7' }
 ];
-
 
 
 export default FilterableProductTable;

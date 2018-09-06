@@ -1,28 +1,38 @@
-.App {
-  text-align: center;
+.app {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  max-width: 500px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.search-box input {
+  border: 2px solid gray;
+  border-radius: 10px;
+  width: 500px;
+  height: 30px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  outline: none
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.categories {
+  font-weight: bold;
+  padding-top: 20px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.header {
+  display: flex;
+  font-size: 18px; 
+  font-weight: bold;
+  justify-content: space-between;
 }
 
-.App-intro {
-  font-size: large;
+.products-list {
+  padding-top: 30px;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.product {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
 }
