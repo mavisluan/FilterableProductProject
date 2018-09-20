@@ -12,11 +12,12 @@ Users will be able to
 
 # App Screenshot
 
-![](src/screenshot.png)
+<img src='src/screenshot.png' width='600'>
 
 
 # Installation Instructions
 
-- clone my repo git clone https://github.com/mavisluan/FilterableProductProject.git
-- install all project dependencies with yarn install
-- start the development server with yarn start
+- git clone https://github.com/mavisluan/FilterableProductProject.git
+- cd FilterableProductProject
+- yarn install
+- yarn start
